@@ -26,11 +26,18 @@ public class URLImageView extends RelativeLayout {
 
     private ImageView mTargetImage, mRefresh;
     private com.github.ybq.android.spinkit.SpinKitView mProgressbar;
+    private Callback mCallback;
 
     public URLImageView(Context context) {
         super(context);
     }
 
+
+    public interface Callback{
+        public void onStartLoad();
+        public void onSuccess();
+        public void onError(Exception e);
+    }
     @SuppressLint("ResourceAsColor")
     public URLImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -49,6 +56,11 @@ public class URLImageView extends RelativeLayout {
         init();
     }
 
+    public URLImageView setCallback(Callback callback){
+        mCallback = callback;
+        return this;
+    }
+
     private void createTargetImage() {
         mTargetImage = new ImageView(getContext());
 
@@ -59,6 +71,11 @@ public class URLImageView extends RelativeLayout {
 
         addView(mTargetImage);
 
+    }
+
+    public void load(String url) {
+        DownloadImageFromUrl imageUrl  = new DownloadImageFromUrl(getContext(), url, mTargetImage, mProgressbar, mRefresh, mPlaceholder, mCallback);
+        imageUrl.load();
     }
 
 
@@ -153,9 +170,6 @@ public class URLImageView extends RelativeLayout {
     }
 
 
-    public void load(String url) {
-        DownloadImageFromUrl imageUrl = new DownloadImageFromUrl(getContext(), url, mTargetImage, mProgressbar, mRefresh, mPlaceholder);
-        imageUrl.load();
-    }
+
 
 }
