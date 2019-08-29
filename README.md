@@ -11,9 +11,12 @@ A powerful image downloading and caching library with spinner and refresh button
 
 - build.gradle (Project.Your_App)
  ``` gradle
-dependencies {
-    implementation 'com.github.zakaryaasadi:URLImageView:0.0.1'
- }
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
  ```
  - build.gradle (Module.app)
  ``` gradle
