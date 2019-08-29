@@ -2,9 +2,7 @@
 
 A powerful image downloading and caching library with spinner and refresh button for Android
 
-![](1.gif)
 
-![](2.gif)
 
 
 ## Gradle Dependency
