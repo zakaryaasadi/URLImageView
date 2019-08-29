@@ -21,7 +21,7 @@ A powerful image downloading and caching library with spinner and refresh button
  - build.gradle (Module.app)
  ``` gradle
 dependencies {
-    implementation 'com.github.zakaryaasadi:URLImageView:0.0.1'
+    implementation 'com.github.zakaryaasadi:URLImageView:0.0.2'
  }
  ```
 ## Permission
