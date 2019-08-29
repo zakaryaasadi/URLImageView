@@ -45,11 +45,54 @@ dependencies {
         app:Placeholder="@drawable/gradient_rect"/>       
 ```
  
-- ProgressBar
+- Java
 
  ```java
 URLImageView imageView = findViewById(R.id.image);
 imageView.load("https://i.ytimg.com/vi/scYvJUUOHK4/maxresdefault.jpg");
+```
+
+
+- Java with events
+
+ ```java
+image.setCallback(new URLImageView.Callback() {
+            @Override
+            public void onStartLoad() {
+                Log.d("onStartLoad : ", "Start load");
+            }
+
+            @Override
+            public void onSuccess() {
+                Log.d("onSuccess : ", "success load");
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Log.d("onError : ", e.getMessage());
+            }
+        }).load("https://i.ytimg.com/vi/scYvJUUOHK4/maxresdefault.jpg");
+```
+Another method
+
+ ```java
+image.setCallback(new URLImageView.Callback() {
+            @Override
+            public void onStartLoad() {
+                Log.d("onStartLoad : ", "Start load");
+            }
+
+            @Override
+            public void onSuccess() {
+                Log.d("onSuccess : ", "success load");
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Log.d("onError : ", e.getMessage());
+            }
+        });
+image.load("https://i.ytimg.com/vi/scYvJUUOHK4/maxresdefault.jpg");
 ```
 
 ## Style
