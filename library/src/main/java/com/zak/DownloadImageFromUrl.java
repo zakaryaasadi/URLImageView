@@ -1,6 +1,7 @@
 package com.zak;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
@@ -55,13 +56,14 @@ public class DownloadImageFromUrl {
         if(mCallback != null){
             mCallback.onStartLoad();
         }
+
         Picasso.get().load(mUrl).placeholder(mPlaceholder)
                 .into(mTarget, new Callback() {
                     @Override
                     public void onSuccess() {
                         mProgressbar.setVisibility(View.GONE);
                         if(mCallback != null){
-                            mCallback.onSuccess();
+                            mCallback.onSuccess(((BitmapDrawable) mTarget.getDrawable()).getBitmap());
                         }
                     }
 

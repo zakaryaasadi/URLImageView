@@ -1,5 +1,6 @@
 package com.zak.urlimageview;
 
+import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onSuccess() {
+            public void onSuccess(Bitmap b) {
+                int x = b.getHeight();
                 Log.d("onSuccess : ", "success load");
             }
 
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             public void onError(Exception e) {
                 Log.d("onError : ", e.getMessage());
             }
-        }).load("213");
+        }).load("https://c4.wallpaperflare.com/wallpaper/246/739/689/digital-digital-art-artwork-illustration-abstract-hd-wallpaper-thumb.jpg");
 
 
     }

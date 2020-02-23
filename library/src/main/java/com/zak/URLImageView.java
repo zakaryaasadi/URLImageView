@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
@@ -35,7 +36,7 @@ public class URLImageView extends RelativeLayout {
 
     public interface Callback{
         public void onStartLoad();
-        public void onSuccess();
+        public void onSuccess(Bitmap bitmap);
         public void onError(Exception e);
     }
     @SuppressLint("ResourceAsColor")
