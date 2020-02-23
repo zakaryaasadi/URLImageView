@@ -21,7 +21,7 @@ A powerful image downloading and caching library with spinner and refresh button
  - build.gradle (Module.app)
  ``` gradle
 dependencies {
-    implementation 'com.github.zakaryaasadi:URLImageView:0.0.3'
+    implementation 'com.github.zakaryaasadi:URLImageView:0.0.4'
  }
  ```
 ## Permission
@@ -63,7 +63,7 @@ image.setCallback(new URLImageView.Callback() {
             }
 
             @Override
-            public void onSuccess() {
+            public void onSuccess(Bitmap bitmap) {
                 Log.d("onSuccess : ", "success load");
             }
 
