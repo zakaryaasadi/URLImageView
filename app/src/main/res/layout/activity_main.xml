@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,10 +9,13 @@
     <com.zak.URLImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
-        android:layout_height="232.3dp"
-        app:scaleType="CENTER_CROP"
+        android:layout_height="400dp"
+        app:scaleType="CENTER_INSIDE"
         app:Spinner_Style="ThreeBounce"
+        app:adjustViewBounds="true"
+        android:background="#333"
         app:Spinner_Color="@color/colorAccent"
-        app:Placeholder="@drawable/gradient_rect"/>
+        app:Placeholder="@drawable/gradient_rect"
+        tools:ignore="MissingConstraints" />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

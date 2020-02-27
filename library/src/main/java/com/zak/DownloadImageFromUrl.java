@@ -1,11 +1,14 @@
 package com.zak;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.squareup.picasso.Callback;
@@ -20,6 +23,8 @@ public class DownloadImageFromUrl {
     private ImageView mRefresh;
     private Drawable mPlaceholder;
     private URLImageView.Callback mCallback;
+    private Bitmap mBitmap;
+
 
     private void init(Context context, String url, ImageView target, SpinKitView progressBar, ImageView refresh, Drawable placeholder, URLImageView.Callback callback){
         mUrl = url;
@@ -62,8 +67,10 @@ public class DownloadImageFromUrl {
                     @Override
                     public void onSuccess() {
                         mProgressbar.setVisibility(View.GONE);
+                        mBitmap = ((BitmapDrawable) mTarget.getDrawable()).getBitmap();
+                        changeResolution(mBitmap.getWidth(), mBitmap.getHeight());
                         if(mCallback != null){
-                            mCallback.onSuccess(((BitmapDrawable) mTarget.getDrawable()).getBitmap());
+                            mCallback.onSuccess(mBitmap);
                         }
                     }
 
@@ -80,6 +87,21 @@ public class DownloadImageFromUrl {
                 });
     }
 
+
+    private void changeResolution(int width, int height){
+        RelativeLayout relativeLayoutParent =
+                ((RelativeLayout)mTarget.getParent());
+        int contentWidth = relativeLayoutParent.getWidth();
+        int contentHeight = relativeLayoutParent.getHeight();
+
+        float ratioHeightToWidth = height / (float) width;
+
+        int newHeight = Math.round(ratioHeightToWidth *contentWidth);
+        if(newHeight > contentHeight && ratioHeightToWidth > 1.0f)
+            newHeight = contentHeight;
+
+        relativeLayoutParent.setLayoutParams(new LinearLayout.LayoutParams(contentWidth, newHeight));
+    }
 
 
 }

@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.LinearLayout;
 
 import com.zak.URLImageView;
 
@@ -13,8 +14,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         URLImageView image = findViewById(R.id.image);
+        image.setResolution(1000, 667);
 
         image.setCallback(new URLImageView.Callback() {
             @Override
@@ -24,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(Bitmap b) {
-                int x = b.getHeight();
                 Log.d("onSuccess : ", "success load");
             }
 
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             public void onError(Exception e) {
                 Log.d("onError : ", e.getMessage());
             }
-        }).load("https://c4.wallpaperflare.com/wallpaper/246/739/689/digital-digital-art-artwork-illustration-abstract-hd-wallpaper-thumb.jpg");
+        }).load("https://images.unsplash.com/photo-1545858908-bc6fee2bd44d?ixlib=rb-1.2.1&w=1000&q=80");
 
 
     }

@@ -1,15 +1,20 @@
 package com.zak;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.github.ybq.android.spinkit.SpinKitView;
@@ -21,13 +26,16 @@ import com.zak.R;
 
 public class URLImageView extends RelativeLayout {
     private Style mStyle;
-    private int mColor;
+    private int mColor, mWidth, mHeight;
     private Drawable mPlaceholder;
     private ImageView.ScaleType mScaleType;
+    private boolean mAdjustViewBounds;
 
     private ImageView mTargetImage, mRefresh;
     private com.github.ybq.android.spinkit.SpinKitView mProgressbar;
     private Callback mCallback;
+    private int layout_height;
+    private int layout_width;
 
     public URLImageView(Context context) {
         super(context);
@@ -35,9 +43,9 @@ public class URLImageView extends RelativeLayout {
 
 
     public interface Callback{
-        public void onStartLoad();
-        public void onSuccess(Bitmap bitmap);
-        public void onError(Exception e);
+        void onStartLoad();
+        void onSuccess(Bitmap bitmap);
+        void onError(Exception e);
     }
     @SuppressLint("ResourceAsColor")
     public URLImageView(Context context, AttributeSet attrs) {
@@ -48,13 +56,43 @@ public class URLImageView extends RelativeLayout {
         mColor = a.getColor(com.zak.R.styleable.URLImage_Spinner_Color, R.color.colorAccent);
         mPlaceholder = a.getDrawable(com.zak.R.styleable.URLImage_Placeholder);
         mScaleType = ImageView.ScaleType.values()[a.getInt(com.zak.R.styleable.URLImage_scaleType, 0)];
-
+        mAdjustViewBounds = a.getBoolean(R.styleable.URLImage_adjustViewBounds, false);
+        getDim(context,attrs);
         createTargetImage();
         createProgressbar();
         createRefreshButton();
 
         a.recycle();
         init();
+    }
+
+    private void getDim(Context context, AttributeSet attrs) {
+        int[] attrsArray = new int[] {
+                android.R.attr.id, // 0
+                android.R.attr.background, // 1
+                android.R.attr.layout_width, // 2
+                android.R.attr.layout_height // 3
+        };
+        TypedArray ta = context.obtainStyledAttributes(attrs, attrsArray);
+        int id = ta.getResourceId(0 /* index of attribute in attrsArray */, View.NO_ID);
+        Drawable background = ta.getDrawable(1);
+        layout_width = ta. getLayoutDimension(2, LayoutParams.MATCH_PARENT);
+        layout_height = ta. getLayoutDimension(3, LayoutParams.MATCH_PARENT);
+
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) getContext()).getWindowManager()
+                .getDefaultDisplay()
+                .getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+
+        if(layout_height == -1 || layout_height == -2)
+            layout_height = height;
+
+        if (layout_width == -1 || layout_width == -2)
+            layout_width = width;
+
     }
 
     public URLImageView setCallback(Callback callback){
@@ -69,13 +107,29 @@ public class URLImageView extends RelativeLayout {
         mTargetImage.setLayoutParams(params);
         mTargetImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
         mTargetImage.setScaleType(mScaleType);
+        mTargetImage.setAdjustViewBounds(mAdjustViewBounds);
 
         addView(mTargetImage);
 
+
+    }
+
+    public URLImageView setResolution(int width, int hight){
+        mWidth = width;
+        mHeight = hight;
+        changeResolution(mWidth, mHeight);
+        return this;
     }
 
     public void load(String url) {
-        DownloadImageFromUrl imageUrl  = new DownloadImageFromUrl(getContext(), url, mTargetImage, mProgressbar, mRefresh, mPlaceholder, mCallback);
+        DownloadImageFromUrl
+            imageUrl  = new DownloadImageFromUrl(getContext(),
+                    url,
+                    mTargetImage,
+                    mProgressbar,
+                    mRefresh,
+                    mPlaceholder,
+                    mCallback);
         imageUrl.load();
     }
 
@@ -171,6 +225,18 @@ public class URLImageView extends RelativeLayout {
     }
 
 
+    private void changeResolution(int width, int height){
 
+        int contentWidth = layout_width;
+        int contentHeight = layout_height;
+
+        float ratioHeightToWidth = height / (float) width;
+
+        int newHeight = Math.round(ratioHeightToWidth * contentWidth);
+        if(newHeight > contentHeight && ratioHeightToWidth > 1.0f)
+            newHeight = contentHeight;
+
+        setLayoutParams(new LinearLayout.LayoutParams(contentWidth, newHeight));
+    }
 
 }

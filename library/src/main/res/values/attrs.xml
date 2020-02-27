@@ -26,6 +26,8 @@
 
         <attr name="Placeholder" format="reference" />
 
+        <attr name="adjustViewBounds" format="boolean" />
+
         <attr name="scaleType">
             <enum name="MATRIX" value="0" />
             <enum name="FIT_XY" value="1" />
