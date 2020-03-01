@@ -100,7 +100,6 @@ public class DownloadImageFromUrl {
         if(newHeight > contentHeight && ratioHeightToWidth > 1.0f)
             newHeight = contentHeight;
 
-        relativeLayoutParent.setLayoutParams(new LinearLayout.LayoutParams(contentWidth, newHeight));
     }
 
 

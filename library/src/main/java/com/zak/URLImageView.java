@@ -13,6 +13,7 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -236,7 +237,11 @@ public class URLImageView extends RelativeLayout {
         if(newHeight > contentHeight && ratioHeightToWidth > 1.0f)
             newHeight = contentHeight;
 
-        setLayoutParams(new LinearLayout.LayoutParams(contentWidth, newHeight));
+        ViewGroup.LayoutParams params = getLayoutParams();
+        params.height = newHeight;
+        params.width = contentWidth;
+
+        setLayoutParams(params);
     }
 
 }
