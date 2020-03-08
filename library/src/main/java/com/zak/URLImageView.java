@@ -69,14 +69,10 @@ public class URLImageView extends RelativeLayout {
 
     private void getDim(Context context, AttributeSet attrs) {
         int[] attrsArray = new int[] {
-                android.R.attr.id, // 0
-                android.R.attr.background, // 1
                 android.R.attr.layout_width, // 2
                 android.R.attr.layout_height // 3
         };
         TypedArray ta = context.obtainStyledAttributes(attrs, attrsArray);
-        int id = ta.getResourceId(0 /* index of attribute in attrsArray */, View.NO_ID);
-        Drawable background = ta.getDrawable(1);
         layout_width = ta. getLayoutDimension(2, LayoutParams.MATCH_PARENT);
         layout_height = ta. getLayoutDimension(3, LayoutParams.MATCH_PARENT);
 
@@ -104,9 +100,8 @@ public class URLImageView extends RelativeLayout {
     private void createTargetImage() {
         mTargetImage = new ImageView(getContext());
 
-        LayoutParams params = new LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.MATCH_PARENT);
+        LayoutParams params = new LayoutParams(layout_width, layout_height);
         mTargetImage.setLayoutParams(params);
-        mTargetImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
         mTargetImage.setScaleType(mScaleType);
         mTargetImage.setAdjustViewBounds(mAdjustViewBounds);
 
@@ -130,7 +125,9 @@ public class URLImageView extends RelativeLayout {
                     mProgressbar,
                     mRefresh,
                     mPlaceholder,
-                    mCallback);
+                    mCallback,
+                    layout_width,
+                    layout_height);
         imageUrl.load();
     }
 

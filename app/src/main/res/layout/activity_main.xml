@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:orientation="vertical">
 
     <com.zak.URLImageView
         android:id="@+id/image"
@@ -17,5 +18,11 @@
         app:Spinner_Color="@color/colorAccent"
         app:Placeholder="@drawable/gradient_rect"
         tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Refresh"/>
 
 </LinearLayout>

@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso;
 
 public class DownloadImageFromUrl {
 
+    private final int layout_width, layout_height;
     private Context mContext;
     private String mUrl;
     private ImageView mTarget;
@@ -49,8 +50,10 @@ public class DownloadImageFromUrl {
 
 
 
-    public DownloadImageFromUrl(Context context, String url, ImageView target, SpinKitView progressBar, ImageView refresh, Drawable placeholder, URLImageView.Callback callback) {
+    public DownloadImageFromUrl(Context context, String url, ImageView target, SpinKitView progressBar, ImageView refresh, Drawable placeholder, URLImageView.Callback callback, int layout_width, int layout_height) {
         init(context, url, target, progressBar, refresh,placeholder, callback);
+        this.layout_width = layout_width;
+        this.layout_height = layout_height;
     }
 
 
@@ -90,20 +93,19 @@ public class DownloadImageFromUrl {
 
 
     private void changeResolution(int width, int height){
+
         RelativeLayout relativeLayoutParent =
                 ((RelativeLayout)mTarget.getParent());
-        int contentWidth = relativeLayoutParent.getWidth();
-        int contentHeight = relativeLayoutParent.getHeight();
 
         float ratioHeightToWidth = height / (float) width;
 
-        int newHeight = Math.round(ratioHeightToWidth *contentWidth);
-        if(newHeight > contentHeight && ratioHeightToWidth > 1.0f)
-            newHeight = contentHeight;
+        int newHeight = Math.round(ratioHeightToWidth * layout_width);
+        if(newHeight > layout_height && ratioHeightToWidth > 1.0f)
+            newHeight = layout_height;
 
         ViewGroup.LayoutParams params = relativeLayoutParent.getLayoutParams();
         params.height = newHeight;
-        params.width = contentWidth;
+        params.width = layout_width;
         relativeLayoutParent.setLayoutParams(params);
     }
 
