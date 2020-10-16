@@ -92,20 +92,22 @@ public class DownloadImageFromUrl {
     }
 
 
+
     private void changeResolution(int width, int height){
 
         RelativeLayout relativeLayoutParent =
                 ((RelativeLayout)mTarget.getParent());
 
-        float ratioHeightToWidth = height / (float) width;
+        int imageViewWeight = mTarget.getMeasuredWidth();
 
-        int newHeight = Math.round(ratioHeightToWidth * layout_width);
-        if(newHeight > layout_height && ratioHeightToWidth > 1.0f)
-            newHeight = layout_height;
+        float newImageViewHeight = imageViewWeight * height / (float) width;
+
+        int newHeight = Math.round(newImageViewHeight);
+
 
         ViewGroup.LayoutParams params = relativeLayoutParent.getLayoutParams();
         params.height = newHeight;
-        params.width = layout_width;
+        params.width = imageViewWeight;
         relativeLayoutParent.setLayoutParams(params);
     }
 
